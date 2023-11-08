@@ -1,9 +1,9 @@
 services:
   mailserver:
-    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    image: mailserver/docker-mailserver:12.1.0
     container_name: mailserver
     # Provide the FQDN of your mail server here (Your DNS MX record should point to this value)
-    hostname: mail.example.com
+    hostname: mail.webinfra.cn
     env_file: mailserver.env
     # More information about the mail-server ports:
     # https://docker-mailserver.github.io/docker-mailserver/latest/config/security/understanding-the-ports/
@@ -19,6 +19,8 @@ services:
       - ./docker-data/dms/mail-state/:/var/mail-state/
       - ./docker-data/dms/mail-logs/:/var/log/mail/
       - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - ./docker-data/certbot/certs/:/etc/letsencrypt/
+      - ./docker-data/certbot/logs/:/var/log/letsencrypt/
       - /etc/localtime:/etc/localtime:ro
     restart: always
     stop_grace_period: 1m
